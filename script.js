@@ -1,32 +1,30 @@
-function checkPassword() {
-  const input = document.getElementById("password").value;
-  const correct = "trappacrypto"; // change this to your naughty secret~
-
-  if (input === correct) {
-    window.location.href = "menu.html";
-  } else {
-    alert("Wrong code, cheeky.");
-  }
-}
 
 let cart = [];
 
-function addToCart(name, price) {
-  cart.push({ name, price });
-  alert(`${name} added, love~`);
+function addToCart(category, item, price) {
+  cart.push({ category, item, price: parseFloat(price) });
+  updateOrderSummary();
 }
 
-function confirmOrder() {
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateOrderSummary();
+}
+
+function updateOrderSummary() {
   const summary = document.getElementById("orderSummary");
   summary.innerHTML = "<h3>Order Summary:</h3>";
+  let total = 0;
 
-  cart.forEach(item => {
-    summary.innerHTML += `<p>${item.name} - ${item.price}</p>`;
+  cart.forEach((item, index) => {
+    total += item.price;
+    summary.innerHTML += `<p>${item.category} - ${item.item} - ${item.price.toFixed(6)} BTC 
+    <button onclick="removeFromCart(${index})">Remove</button></p>`;
   });
 
   summary.innerHTML += `
+    <p><b>Total BTC:</b> ${total.toFixed(6)}</p>
     <p><b>Send total to wallet:</b></p>
-    <p>ETH: 0xYourWalletHere</p>
     <p>BTC: YourBTCWalletHere</p>
     <p>Paste txID below after payment:</p>
     <input type="text" placeholder="Transaction ID">
