@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exclusive Inventory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Private Client Access</h2>
+  <p>High-level access only. Operate with precision.</p>
+  <div id="menu"></div>
+  <button onclick="confirmOrder()">Confirm Order</button>
+  <div id="orderSummary"></div>
+  <script>
+    const menu = {
+      "Addy": {
+        "100 pills": 150,
+        "250 pills": 275,
+        "500 pills": 500,
+        "1 boat (1000 pills)": 800,
+        "2 boats (2000 pills)": 1400,
+        "5 boats (5000 pills)": 3250,
+        "10 boats (10000 pills)": 5500
+      },
+      "Bars": {
+        "50 pills": 150,
+        "100 pills": 250,
+        "250 pills": 450,
+        "500 pills": 700,
+        "1 boat (1000 pills)": 1000,
+        "2 boats (2000 pills)": 1900,
+        "5 boats (5000 pills)": 4250
+      },
+      "K": {
+        "7g": 200,
+        "14g": 350,
+        "28g": 650,
+        "112g": 2200,
+        "250g": 3800,
+        "500g": 6000,
+        "1kg": 11000
+      },
+      "M": {
+        "7g": 150,
+        "14g": 250,
+        "28g": 500,
+        "112g": 1600,
+        "250g": 2500,
+        "500g": 4500,
+        "1kg": 8000
+      },
+      "OT": {
+        "10 pills": 150,
+        "25 pills": 250,
+        "50 pills": 450,
+        "100 pills": 700,
+        "500 pills": 3000,
+        "1000 pills": 5000
+      },
+      "Yay": {
+        "2g": 100,
+        "14g": 400,
+        "28g": 650,
+        "112g": 2400,
+        "250g": 4500,
+        "500g": 8000,
+        "1000g": 15000
+      }
+    };
+
+    let cart = [];
+
+    function displayMenu() {
+      const menuDiv = document.getElementById("menu");
+      for (let category in menu) {
+        let catDiv = document.createElement("div");
+        catDiv.innerHTML = `<h3>${category}</h3>`;
+        for (let item in menu[category]) {
+          let priceUSD = menu[category][item];
+          let itemHTML = `
+            <div class="item">
+              <p>${item} - $${priceUSD}</p>
+              <button onclick="addToCart('${category}', '${item}', '${priceUSD}')">Add</button>
+            </div>
+          `;
+          catDiv.innerHTML += itemHTML;
+        }
+        menuDiv.appendChild(catDiv);
+      }
+    }
+
+    function confirmOrder() {
+      updateOrderSummary();
+    }
+
+    window.onload = displayMenu;
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
