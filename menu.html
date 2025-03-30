@@ -112,9 +112,9 @@
       `;
     }
 
-    axios.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
+    axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
       .then(response => {
-        const rate = response.data.bpi.USD.rate_float;
+        const rate = response.data.bitcoin.usd;
         displayMenu(rate);
       })
       .catch(error => {
